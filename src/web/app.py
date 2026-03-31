@@ -64,7 +64,17 @@ def save():
         "sectors": [s.strip().lower() for s in data.get("sectors", []) if s.strip()],
         "target_market": data.get("target_market", "US Equities"),
         "interval_minutes": int(data.get("interval_minutes", 10)),
+        "active_hour_start": data.get("active_hour_start", "04:00"),
+        "active_hour_end": data.get("active_hour_end", "10:00"),
+        "briefing_detail": data.get("briefing_detail", "normal"),
+        "briefing_items": int(data.get("briefing_items", 5)),
+        "news_sources": [s for s in data.get("news_sources", ["reuters","cnbc","marketwatch","finnhub"])],
+        "language": data.get("language", "ko"),
         "urgent_alerts": bool(data.get("urgent_alerts", False)),
+        "alert_market_open": bool(data.get("alert_market_open", False)),
+        "alert_market_close": bool(data.get("alert_market_close", False)),
+        "dedup_filter": bool(data.get("dedup_filter", True)),
+        "max_age_hours": int(data.get("max_age_hours", 36)),
     }
     prefs.save(updated)
     return jsonify({"ok": True})

@@ -8,151 +8,213 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0f0f0f;
-      color: #e8e8e8;
+      background: #0a0a0a;
+      color: #e0e0e0;
       min-height: 100vh;
-      padding: 32px 16px 80px;
+      padding: 28px 16px 100px;
     }
-    .page { max-width: 560px; margin: 0 auto; }
+    .page { max-width: 600px; margin: 0 auto; }
 
     header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
     header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
     .saved-indicator {
-      font-size: 12px;
-      color: #3a3;
-      opacity: 0;
-      transition: opacity 0.3s;
+      font-size: 12px; color: #4caf50;
+      opacity: 0; transition: opacity 0.3s;
     }
     .saved-indicator.show { opacity: 1; }
 
-    .section { margin-bottom: 28px; }
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #555;
-      margin-bottom: 10px;
+    /* Card sections */
+    .card {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: #888;
+    }
+    .card-count {
+      font-size: 11px; color: #444;
+      background: #1e1e1e; padding: 2px 8px; border-radius: 10px;
     }
 
-    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    /* Category label inside card */
+    .cat-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: #3a3a3a; margin: 14px 0 7px;
+    }
+    .cat-label:first-of-type { margin-top: 0; }
+
+    /* Chips */
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
     .chip {
-      padding: 6px 13px;
-      border-radius: 20px;
-      border: 1px solid #2a2a2a;
+      padding: 5px 11px;
+      border-radius: 18px;
+      border: 1px solid #222;
       background: #1a1a1a;
-      color: #666;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.12s;
+      color: #555;
+      font-size: 12px; font-weight: 500;
+      cursor: pointer; user-select: none;
+      transition: all 0.1s;
     }
-    .chip:hover { border-color: #444; color: #ccc; }
-    .chip.active { background: #e8e8e8; border-color: #e8e8e8; color: #0f0f0f; }
+    .chip:hover { border-color: #3a3a3a; color: #bbb; }
+    .chip.active { background: #e8e8e8; border-color: #e8e8e8; color: #0a0a0a; font-weight: 600; }
+    .chip.active:hover { opacity: 0.85; }
 
-    .add-row { display: flex; gap: 8px; margin-top: 10px; }
-    .add-row input {
-      flex: 1;
-      padding: 7px 12px;
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      border-radius: 20px;
-      color: #e8e8e8;
-      font-size: 13px;
-      outline: none;
+    /* Segment (single-select row) */
+    .segment { display: flex; gap: 6px; }
+    .seg-btn {
+      flex: 1; padding: 9px 0; text-align: center;
+      border-radius: 8px; border: 1px solid #222;
+      background: #1a1a1a; color: #444;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      transition: all 0.1s;
     }
-    .add-row input::placeholder { color: #3a3a3a; }
-    .add-row input:focus { border-color: #555; }
+    .seg-btn:hover { border-color: #3a3a3a; color: #bbb; }
+    .seg-btn.active { background: #e8e8e8; border-color: #e8e8e8; color: #0a0a0a; font-weight: 700; }
+
+    /* Add row */
+    .add-row { display: flex; gap: 8px; margin-top: 12px; }
+    .add-row input {
+      flex: 1; padding: 7px 13px;
+      background: #1a1a1a; border: 1px solid #222;
+      border-radius: 18px; color: #e0e0e0;
+      font-size: 13px; outline: none;
+    }
+    .add-row input::placeholder { color: #333; }
+    .add-row input:focus { border-color: #444; }
     .add-row button {
       padding: 7px 14px;
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      border-radius: 20px;
-      color: #888;
-      font-size: 13px;
-      cursor: pointer;
+      background: #1a1a1a; border: 1px solid #222;
+      border-radius: 18px; color: #666;
+      font-size: 13px; cursor: pointer;
     }
-    .add-row button:hover { border-color: #555; color: #ddd; }
+    .add-row button:hover { border-color: #444; color: #ddd; }
 
-    .market-group { display: flex; gap: 7px; }
-    .market-btn {
-      flex: 1; padding: 9px 0; text-align: center;
-      border-radius: 8px; border: 1px solid #2a2a2a;
-      background: #1a1a1a; color: #555;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      transition: all 0.12s;
-    }
-    .market-btn:hover { border-color: #444; color: #ccc; }
-    .market-btn.active { background: #e8e8e8; border-color: #e8e8e8; color: #0f0f0f; font-weight: 600; }
-
-    /* Time chips — 30-min slots */
-    .time-chips { display: flex; flex-wrap: wrap; gap: 7px; }
-    .time-chip {
-      padding: 7px 14px;
-      border-radius: 8px;
-      border: 1px solid #2a2a2a;
-      background: #1a1a1a;
-      color: #555;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      font-variant-numeric: tabular-nums;
-      transition: all 0.12s;
-      letter-spacing: 0.02em;
-    }
-    .time-chip:hover { border-color: #444; color: #ccc; }
-    .time-chip.active { background: #e8e8e8; border-color: #e8e8e8; color: #0f0f0f; }
-
+    /* Toggle row */
     .toggle-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 16px; background: #1a1a1a;
-      border: 1px solid #2a2a2a; border-radius: 10px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 11px 0;
+      border-bottom: 1px solid #1e1e1e;
     }
-    .toggle-label { font-size: 14px; color: #ccc; }
-    .toggle-sub { font-size: 12px; color: #444; margin-top: 3px; }
-    .switch { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+    .toggle-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .toggle-row:first-child { padding-top: 0; }
+    .toggle-info .t-label { font-size: 14px; color: #ccc; }
+    .toggle-info .t-sub { font-size: 11px; color: #444; margin-top: 2px; }
+    .switch { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider {
       position: absolute; inset: 0;
-      background: #2a2a2a; border-radius: 24px;
+      background: #252525; border-radius: 22px;
       cursor: pointer; transition: background 0.2s;
     }
     .slider::before {
       content: ""; position: absolute;
-      width: 18px; height: 18px; left: 3px; top: 3px;
-      background: #555; border-radius: 50%;
+      width: 16px; height: 16px; left: 3px; top: 3px;
+      background: #4a4a4a; border-radius: 50%;
       transition: transform 0.2s, background 0.2s;
     }
     .switch input:checked + .slider { background: #e8e8e8; }
-    .switch input:checked + .slider::before { transform: translateX(18px); background: #0f0f0f; }
+    .switch input:checked + .slider::before { transform: translateX(18px); background: #0a0a0a; }
 
-    .divider { height: 1px; background: #1e1e1e; margin: 28px 0; }
-
-    /* Send button — fixed bottom */
-    .send-bar {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      padding: 14px 16px;
-      background: #0f0f0f;
-      border-top: 1px solid #1e1e1e;
+    /* Time grid */
+    .time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .time-btn {
+      padding: 9px 0; text-align: center;
+      border-radius: 8px; border: 1px solid #222;
+      background: #1a1a1a; color: #444;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; font-variant-numeric: tabular-nums;
+      transition: all 0.1s;
     }
-    .send-bar-inner { max-width: 560px; margin: 0 auto; }
+    .time-btn:hover { border-color: #3a3a3a; color: #bbb; }
+    .time-btn.active { background: #e8e8e8; border-color: #e8e8e8; color: #0a0a0a; }
+
+    /* Active hours */
+    .hours-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+    .hours-row label { font-size: 12px; color: #555; white-space: nowrap; }
+    .hours-row select {
+      flex: 1; padding: 7px 10px;
+      background: #1a1a1a; border: 1px solid #222;
+      border-radius: 8px; color: #ccc;
+      font-size: 13px; outline: none; cursor: pointer;
+      appearance: none;
+    }
+    .hours-row select:focus { border-color: #444; }
+    .hours-sep { color: #333; font-size: 13px; }
+
+    /* Source toggles */
+    .source-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .source-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 12px;
+      background: #1a1a1a; border: 1px solid #222; border-radius: 8px;
+    }
+    .source-name { font-size: 13px; color: #aaa; }
+    .source-badge { font-size: 10px; color: #444; margin-top: 1px; }
+
+    /* Briefing detail chips */
+    .detail-chips { display: flex; gap: 6px; }
+    .detail-chip {
+      flex: 1; padding: 10px 0; text-align: center;
+      border-radius: 8px; border: 1px solid #222;
+      background: #1a1a1a; color: #444;
+      font-size: 13px; cursor: pointer;
+      transition: all 0.1s;
+    }
+    .detail-chip:hover { border-color: #3a3a3a; color: #bbb; }
+    .detail-chip.active { background: #e8e8e8; border-color: #e8e8e8; color: #0a0a0a; font-weight: 600; }
+    .detail-chip .dc-label { font-size: 13px; font-weight: 600; }
+    .detail-chip .dc-sub { font-size: 10px; margin-top: 2px; color: inherit; opacity: 0.6; }
+
+    /* Items count */
+    .count-row { display: flex; gap: 6px; margin-top: 10px; }
+    .count-btn {
+      flex: 1; padding: 8px 0; text-align: center;
+      border-radius: 8px; border: 1px solid #222;
+      background: #1a1a1a; color: #444;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: all 0.1s;
+    }
+    .count-btn:hover { border-color: #3a3a3a; color: #bbb; }
+    .count-btn.active { background: #e8e8e8; border-color: #e8e8e8; color: #0a0a0a; }
+
+    .sub-label { font-size: 11px; color: #444; margin-bottom: 8px; }
+
+    /* Send bar */
+    .send-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      padding: 12px 16px;
+      background: rgba(10,10,10,0.95);
+      border-top: 1px solid #1e1e1e;
+      backdrop-filter: blur(10px);
+    }
+    .send-bar-inner { max-width: 600px; margin: 0 auto; }
     .send-btn {
       width: 100%; padding: 13px;
-      background: #e8e8e8; color: #0f0f0f;
+      background: #e8e8e8; color: #0a0a0a;
       border: none; border-radius: 10px;
       font-size: 15px; font-weight: 700;
       cursor: pointer; transition: opacity 0.15s;
     }
     .send-btn:hover { opacity: 0.85; }
-    .send-btn:disabled { opacity: 0.4; cursor: default; }
-    .send-btn.sending { opacity: 0.6; }
+    .send-btn:disabled { opacity: 0.35; cursor: default; }
   </style>
 </head>
 <body>
@@ -163,37 +225,59 @@
     <span class="saved-indicator" id="savedIndicator">✓ 저장됨</span>
   </header>
 
-  <!-- Watchlist -->
-  <div class="section">
-    <div class="section-label">워치리스트</div>
+  <!-- ── 워치리스트 ─────────────────────────── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">워치리스트</span>
+      <span class="card-count" id="watchCount">0개 선택</span>
+    </div>
+
+    <div class="cat-label">빅테크</div>
     <div class="chips" id="watchlistChips">
-      {% set preset_tickers = ["NVDA", "AAPL", "TSLA", "MSFT", "AMZN", "GOOGL", "META", "AMD", "PLTR", "COIN", "SPY", "QQQ"] %}
-      {% for t in preset_tickers %}
-        <div class="chip {% if t in prefs.watchlist %}active{% endif %}"
-             data-group="watchlist" data-value="{{ t }}">{{ t }}</div>
+      {% set groups = [
+        ("빅테크",   ["AAPL","MSFT","GOOGL","AMZN","META","NFLX"]),
+        ("AI·반도체", ["NVDA","AMD","INTC","AVGO","QCOM","ARM","TSM","ASML","MU"]),
+        ("EV·모빌리티",["TSLA","RIVN","NIO","LI","F","GM"]),
+        ("핀테크·크립토",["COIN","MSTR","HOOD","PYPL","SQ","V","MA"]),
+        ("바이오·헬스",["LLY","JNJ","UNH","MRNA","ABBV","PFE"]),
+        ("에너지",   ["XOM","CVX","OXY","SLB"]),
+        ("금융",     ["JPM","BAC","GS","MS","WFC"]),
+        ("ETF·인덱스",["SPY","QQQ","IWM","DIA","GLD","TLT","SOXL","TQQQ"])
+      ] %}
+      {% for gname, tickers in groups %}
+        <div style="width:100%; margin-top:{% if loop.index > 1 %}12{% else %}0{% endif %}px; margin-bottom:7px;" class="cat-label">{{ gname }}</div>
+        {% for t in tickers %}
+          <div class="chip {% if t in prefs.watchlist %}active{% endif %}"
+               data-group="watchlist" data-value="{{ t }}">{{ t }}</div>
+        {% endfor %}
       {% endfor %}
       {% for t in prefs.watchlist %}
-        {% if t not in preset_tickers %}
+        {% set all_presets = ["AAPL","MSFT","GOOGL","AMZN","META","NFLX","NVDA","AMD","INTC","AVGO","QCOM","ARM","TSM","ASML","MU","TSLA","RIVN","NIO","LI","F","GM","COIN","MSTR","HOOD","PYPL","SQ","V","MA","LLY","JNJ","UNH","MRNA","ABBV","PFE","XOM","CVX","OXY","SLB","JPM","BAC","GS","MS","WFC","SPY","QQQ","IWM","DIA","GLD","TLT","SOXL","TQQQ"] %}
+        {% if t not in all_presets %}
           <div class="chip active" data-group="watchlist" data-value="{{ t }}">{{ t }}</div>
         {% endif %}
       {% endfor %}
     </div>
+
     <div class="add-row">
       <input type="text" id="customTicker" placeholder="직접 추가 (예: MSTR)" maxlength="10">
       <button type="button" onclick="addCustomTicker()">+ 추가</button>
     </div>
   </div>
 
-  <div class="divider"></div>
-
-  <!-- Sectors -->
-  <div class="section">
-    <div class="section-label">관심 섹터</div>
+  <!-- ── 관심 섹터 ─────────────────────────── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">관심 섹터</span>
+      <span class="card-count" id="sectorCount">0개 선택</span>
+    </div>
     <div class="chips" id="sectorChips">
       {% set preset_sectors = [
-        ("semiconductors", "반도체"), ("ai", "AI"), ("energy", "에너지"),
-        ("financials", "금융"), ("biotech", "바이오"), ("consumer", "소비재"),
-        ("industrials", "산업재"), ("crypto", "크립토")
+        ("semiconductors","반도체"), ("ai","AI·머신러닝"), ("cloud","클라우드"),
+        ("cybersecurity","사이버보안"), ("fintech","핀테크"), ("crypto","크립토"),
+        ("biotech","바이오·헬스"), ("energy","에너지"), ("financials","금융"),
+        ("consumer","소비재"), ("industrials","산업재"), ("defense","방산"),
+        ("realestate","부동산"), ("utilities","유틸리티")
       ] %}
       {% for val, label in preset_sectors %}
         <div class="chip {% if val in prefs.sectors %}active{% endif %}"
@@ -202,40 +286,130 @@
     </div>
   </div>
 
-  <div class="divider"></div>
-
-  <!-- Target market -->
-  <div class="section">
-    <div class="section-label">대상 시장</div>
-    <div class="market-group">
+  <!-- ── 대상 시장 ─────────────────────────── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">대상 시장</span>
+    </div>
+    <div class="segment">
       {% for val, label in [("US Equities","🇺🇸 미국"), ("Korean Equities","🇰🇷 한국"), ("Global","🌐 글로벌")] %}
-        <div class="market-btn {% if prefs.target_market == val %}active{% endif %}"
-             data-value="{{ val }}" onclick="selectMarket(this)">{{ label }}</div>
+        <div class="seg-btn {% if prefs.target_market == val %}active{% endif %}"
+             data-value="{{ val }}" onclick="selectSingle(this,'market')">{{ label }}</div>
       {% endfor %}
     </div>
   </div>
 
-  <div class="divider"></div>
+  <!-- ── 발송 주기 ─────────────────────────── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">발송 주기</span>
+    </div>
+    <div class="time-grid">
+      {% for mins, label in [(5,"5분"),(10,"10분"),(15,"15분"),(20,"20분"),(30,"30분"),(45,"45분"),(60,"1시간"),(120,"2시간")] %}
+        <div class="time-btn {% if prefs.interval_minutes == mins %}active{% endif %}"
+             data-value="{{ mins }}" onclick="selectSingle(this,'interval')">{{ label }}</div>
+      {% endfor %}
+    </div>
 
-  <!-- Interval -->
-  <div class="section">
-    <div class="section-label">발송 주기</div>
-    <div class="time-chips" id="timeChips">
-      {% for mins, label in [(10,"10분"), (20,"20분"), (30,"30분"), (60,"1시간")] %}
-        <div class="time-chip {% if prefs.interval_minutes == mins %}active{% endif %}"
-             data-value="{{ mins }}" onclick="selectTime(this)">{{ label }}</div>
+    <div style="margin-top:16px;">
+      <div class="sub-label">발송 활성 시간대 (이 시간 사이에만 발송)</div>
+      <div class="hours-row">
+        <label>시작</label>
+        <select id="hourStart" onchange="autoSave()">
+          {% for h in range(0, 24) %}
+            {% set hstr = "%02d:00"|format(h) %}
+            <option value="{{ hstr }}" {% if prefs.get('active_hour_start','04:00') == hstr %}selected{% endif %}>{{ hstr }}</option>
+          {% endfor %}
+        </select>
+        <span class="hours-sep">—</span>
+        <label>종료</label>
+        <select id="hourEnd" onchange="autoSave()">
+          {% for h in range(0, 24) %}
+            {% set hstr = "%02d:00"|format(h) %}
+            <option value="{{ hstr }}" {% if prefs.get('active_hour_end','10:00') == hstr %}selected{% endif %}>{{ hstr }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 브리핑 상세도 ─────────────────────── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">브리핑 상세도</span>
+    </div>
+    <div class="detail-chips">
+      {% for val, lbl, sub in [("short","짧게","3줄 핵심"),("normal","보통","5줄 요약"),("detailed","상세","7줄 분석")] %}
+        <div class="detail-chip {% if prefs.get('briefing_detail','normal') == val %}active{% endif %}"
+             data-value="{{ val }}" onclick="selectSingle(this,'detail')">
+          <div class="dc-label">{{ lbl }}</div>
+          <div class="dc-sub">{{ sub }}</div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div style="margin-top:14px;">
+      <div class="sub-label">최대 뉴스 항목 수</div>
+      <div class="count-row">
+        {% for n in [3, 5, 7, 10] %}
+          <div class="count-btn {% if prefs.get('briefing_items', 5) == n %}active{% endif %}"
+               data-value="{{ n }}" onclick="selectSingle(this,'items')">{{ n }}개</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 뉴스 소스 ─────────────────────────── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">뉴스 소스</span>
+    </div>
+    <div class="source-grid">
+      {% set all_sources = [
+        ("reuters","Reuters","로이터 비즈니스"),
+        ("cnbc","CNBC","미국 경제 뉴스"),
+        ("marketwatch","MarketWatch","마켓워치"),
+        ("finnhub","Finnhub","실시간 금융 데이터")
+      ] %}
+      {% for sid, sname, sdesc in all_sources %}
+        <div class="source-item">
+          <div>
+            <div class="source-name">{{ sname }}</div>
+            <div class="source-badge">{{ sdesc }}</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="src_{{ sid }}"
+                   {% if sid in prefs.get('news_sources', ['reuters','cnbc','marketwatch','finnhub']) %}checked{% endif %}
+                   onchange="autoSave()">
+            <span class="slider"></span>
+          </label>
+        </div>
       {% endfor %}
     </div>
   </div>
 
-  <div class="divider"></div>
+  <!-- ── 언어 ─────────────────────────────── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">출력 언어</span>
+    </div>
+    <div class="segment">
+      {% for val, label in [("ko","🇰🇷 한국어"), ("en","🇺🇸 English")] %}
+        <div class="seg-btn {% if prefs.get('language','ko') == val %}active{% endif %}"
+             data-value="{{ val }}" onclick="selectSingle(this,'language')">{{ label }}</div>
+      {% endfor %}
+    </div>
+  </div>
 
-  <!-- Urgent alerts -->
-  <div class="section">
+  <!-- ── 알림 설정 ─────────────────────────── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">알림 설정</span>
+    </div>
     <div class="toggle-row">
-      <div>
-        <div class="toggle-label">긴급 알림</div>
-        <div class="toggle-sub">장중 중요 이벤트 발생 시 즉시 전송</div>
+      <div class="toggle-info">
+        <div class="t-label">긴급 알림</div>
+        <div class="t-sub">장중 중요 이벤트 발생 시 즉시 전송</div>
       </div>
       <label class="switch">
         <input type="checkbox" id="urgentToggle"
@@ -243,6 +417,56 @@
                onchange="autoSave()">
         <span class="slider"></span>
       </label>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-info">
+        <div class="t-label">장 시작 알림</div>
+        <div class="t-sub">미국 기준 09:30 브리핑 자동 발송</div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="marketOpenToggle"
+               {% if prefs.get('alert_market_open', False) %}checked{% endif %}
+               onchange="autoSave()">
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-info">
+        <div class="t-label">장 마감 알림</div>
+        <div class="t-sub">미국 기준 16:00 일일 요약 전송</div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="marketCloseToggle"
+               {% if prefs.get('alert_market_close', False) %}checked{% endif %}
+               onchange="autoSave()">
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-info">
+        <div class="t-label">중복 뉴스 필터</div>
+        <div class="t-sub">같은 내용 반복 발송 차단</div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="dedupToggle"
+               {% if prefs.get('dedup_filter', True) %}checked{% endif %}
+               onchange="autoSave()">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- ── 뉴스 신선도 ───────────────────────── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">뉴스 신선도 기준</span>
+    </div>
+    <div class="sub-label">이 시간 이내 뉴스만 사용</div>
+    <div class="segment">
+      {% for val, label in [(6,"6시간"),(12,"12시간"),(24,"24시간"),(36,"36시간")] %}
+        <div class="seg-btn {% if prefs.get('max_age_hours', 36) == val %}active{% endif %}"
+             data-value="{{ val }}" onclick="selectSingle(this,'maxAge')">{{ label }}</div>
+      {% endfor %}
     </div>
   </div>
 
@@ -258,7 +482,6 @@
 <script>
   // --- Auto-save ---
   let saveTimer = null;
-
   function autoSave() {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(commitSave, 400);
@@ -268,9 +491,21 @@
     const payload = {
       watchlist: getActive("watchlistChips"),
       sectors: getActive("sectorChips"),
-      target_market: document.querySelector(".market-btn.active")?.dataset.value ?? "US Equities",
-      interval_minutes: parseInt(document.querySelector(".time-chip.active")?.dataset.value ?? "10"),
+      target_market: getSegVal("market") ?? "US Equities",
+      interval_minutes: parseInt(getSegVal("interval") ?? "10"),
+      active_hour_start: document.getElementById("hourStart").value,
+      active_hour_end: document.getElementById("hourEnd").value,
+      briefing_detail: getSegVal("detail") ?? "normal",
+      briefing_items: parseInt(getSegVal("items") ?? "5"),
+      news_sources: ["reuters","cnbc","marketwatch","finnhub"].filter(s =>
+        document.getElementById("src_" + s)?.checked
+      ),
+      language: getSegVal("language") ?? "ko",
       urgent_alerts: document.getElementById("urgentToggle").checked,
+      alert_market_open: document.getElementById("marketOpenToggle").checked,
+      alert_market_close: document.getElementById("marketCloseToggle").checked,
+      dedup_filter: document.getElementById("dedupToggle").checked,
+      max_age_hours: parseInt(getSegVal("maxAge") ?? "36"),
     };
     fetch("/save", {
       method: "POST",
@@ -290,25 +525,26 @@
       .map(c => c.dataset.value);
   }
 
+  // segment group tracking
+  const _segVals = {};
+  function getSegVal(group) { return _segVals[group] ?? null; }
+
   // --- Chip toggles ---
   document.querySelectorAll(".chip").forEach(chip => {
     chip.addEventListener("click", () => {
       chip.classList.toggle("active");
+      updateCounts();
       autoSave();
     });
   });
 
-  // --- Market select ---
-  function selectMarket(el) {
-    document.querySelectorAll(".market-btn").forEach(b => b.classList.remove("active"));
+  // --- Single-select (seg-btn, time-btn, detail-chip, count-btn) ---
+  function selectSingle(el, group) {
+    const parent = el.closest(".card") || el.parentElement;
+    const cls = el.className.split(" ")[0]; // first class = type
+    parent.querySelectorAll("." + cls).forEach(b => b.classList.remove("active"));
     el.classList.add("active");
-    autoSave();
-  }
-
-  // --- Time select ---
-  function selectTime(el) {
-    document.querySelectorAll(".time-chip").forEach(t => t.classList.remove("active"));
-    el.classList.add("active");
+    _segVals[group] = el.dataset.value;
     autoSave();
   }
 
@@ -326,10 +562,11 @@
       chip.dataset.group = "watchlist";
       chip.dataset.value = val;
       chip.textContent = val;
-      chip.addEventListener("click", () => { chip.classList.toggle("active"); autoSave(); });
+      chip.addEventListener("click", () => { chip.classList.toggle("active"); updateCounts(); autoSave(); });
       document.getElementById("watchlistChips").appendChild(chip);
     }
     input.value = "";
+    updateCounts();
     autoSave();
   }
 
@@ -337,22 +574,33 @@
     if (e.key === "Enter") { e.preventDefault(); addCustomTicker(); }
   });
 
+  // --- Counts ---
+  function updateCounts() {
+    const wc = getActive("watchlistChips").length;
+    const sc = getActive("sectorChips").length;
+    document.getElementById("watchCount").textContent = wc + "개 선택";
+    document.getElementById("sectorCount").textContent = sc + "개 선택";
+  }
+
   // --- Send now ---
   function sendNow() {
     const btn = document.getElementById("sendBtn");
     btn.disabled = true;
-    btn.classList.add("sending");
-    btn.textContent = "발송 중...";
-
-    // Show feedback immediately — pipeline runs in background
     btn.textContent = "발송 요청됨 ✓";
     fetch("/send", { method: "POST" }).catch(() => {});
     setTimeout(() => {
       btn.textContent = "지금 발송";
       btn.disabled = false;
-      btn.classList.remove("sending");
     }, 3000);
   }
+
+  // Init counts & segment values on load
+  updateCounts();
+  document.querySelectorAll(".seg-btn.active, .time-btn.active, .detail-chip.active, .count-btn.active").forEach(el => {
+    const onclick = el.getAttribute("onclick") || "";
+    const m = onclick.match(/selectSingle\(this,'(\w+)'\)/);
+    if (m) _segVals[m[1]] = el.dataset.value;
+  });
 </script>
 </body>
 </html>
