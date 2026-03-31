@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>브리핑 설정</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      min-height: 100vh;
+      padding: 32px 16px 80px;
+    }
+    .page { max-width: 560px; margin: 0 auto; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+    header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+    .saved-indicator {
+      font-size: 12px;
+      color: #3a3;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .saved-indicator.show { opacity: 1; }
+
+    .section { margin-bottom: 28px; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip {
+      padding: 6px 13px;
+      border-radius: 20px;
+      border: 1px solid #2a2a2a;
+      background: #1a1a1a;
+      color: #666;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.12s;
+    }
+    .chip:hover { border-color: #444; color: #ccc; }
+    .chip.active { background: #e8e8e8; border-color: #e8e8e8; color: #0f0f0f; }
+
+    .add-row { display: flex; gap: 8px; margin-top: 10px; }
+    .add-row input {
+      flex: 1;
+      padding: 7px 12px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 20px;
+      color: #e8e8e8;
+      font-size: 13px;
+      outline: none;
+    }
+    .add-row input::placeholder { color: #3a3a3a; }
+    .add-row input:focus { border-color: #555; }
+    .add-row button {
+      padding: 7px 14px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 20px;
+      color: #888;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .add-row button:hover { border-color: #555; color: #ddd; }
+
+    .market-group { display: flex; gap: 7px; }
+    .market-btn {
+      flex: 1; padding: 9px 0; text-align: center;
+      border-radius: 8px; border: 1px solid #2a2a2a;
+      background: #1a1a1a; color: #555;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      transition: all 0.12s;
+    }
+    .market-btn:hover { border-color: #444; color: #ccc; }
+    .market-btn.active { background: #e8e8e8; border-color: #e8e8e8; color: #0f0f0f; font-weight: 600; }
+
+    /* Time chips — 30-min slots */
+    .time-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .time-chip {
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid #2a2a2a;
+      background: #1a1a1a;
+      color: #555;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-variant-numeric: tabular-nums;
+      transition: all 0.12s;
+      letter-spacing: 0.02em;
+    }
+    .time-chip:hover { border-color: #444; color: #ccc; }
+    .time-chip.active { background: #e8e8e8; border-color: #e8e8e8; color: #0f0f0f; }
+
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px; background: #1a1a1a;
+      border: 1px solid #2a2a2a; border-radius: 10px;
+    }
+    .toggle-label { font-size: 14px; color: #ccc; }
+    .toggle-sub { font-size: 12px; color: #444; margin-top: 3px; }
+    .switch { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; inset: 0;
+      background: #2a2a2a; border-radius: 24px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .slider::before {
+      content: ""; position: absolute;
+      width: 18px; height: 18px; left: 3px; top: 3px;
+      background: #555; border-radius: 50%;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .switch input:checked + .slider { background: #e8e8e8; }
+    .switch input:checked + .slider::before { transform: translateX(18px); background: #0f0f0f; }
+
+    .divider { height: 1px; background: #1e1e1e; margin: 28px 0; }
+
+    /* Send button — fixed bottom */
+    .send-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      padding: 14px 16px;
+      background: #0f0f0f;
+      border-top: 1px solid #1e1e1e;
+    }
+    .send-bar-inner { max-width: 560px; margin: 0 auto; }
+    .send-btn {
+      width: 100%; padding: 13px;
+      background: #e8e8e8; color: #0f0f0f;
+      border: none; border-radius: 10px;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: opacity 0.15s;
+    }
+    .send-btn:hover { opacity: 0.85; }
+    .send-btn:disabled { opacity: 0.4; cursor: default; }
+    .send-btn.sending { opacity: 0.6; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>브리핑 설정</h1>
+    <span class="saved-indicator" id="savedIndicator">✓ 저장됨</span>
+  </header>
+
+  <!-- Watchlist -->
+  <div class="section">
+    <div class="section-label">워치리스트</div>
+    <div class="chips" id="watchlistChips">
+      {% set preset_tickers = ["NVDA", "AAPL", "TSLA", "MSFT", "AMZN", "GOOGL", "META", "AMD", "PLTR", "COIN", "SPY", "QQQ"] %}
+      {% for t in preset_tickers %}
+        <div class="chip {% if t in prefs.watchlist %}active{% endif %}"
+             data-group="watchlist" data-value="{{ t }}">{{ t }}</div>
+      {% endfor %}
+      {% for t in prefs.watchlist %}
+        {% if t not in preset_tickers %}
+          <div class="chip active" data-group="watchlist" data-value="{{ t }}">{{ t }}</div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="add-row">
+      <input type="text" id="customTicker" placeholder="직접 추가 (예: MSTR)" maxlength="10">
+      <button type="button" onclick="addCustomTicker()">+ 추가</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Sectors -->
+  <div class="section">
+    <div class="section-label">관심 섹터</div>
+    <div class="chips" id="sectorChips">
+      {% set preset_sectors = [
+        ("semiconductors", "반도체"), ("ai", "AI"), ("energy", "에너지"),
+        ("financials", "금융"), ("biotech", "바이오"), ("consumer", "소비재"),
+        ("industrials", "산업재"), ("crypto", "크립토")
+      ] %}
+      {% for val, label in preset_sectors %}
+        <div class="chip {% if val in prefs.sectors %}active{% endif %}"
+             data-group="sectors" data-value="{{ val }}">{{ label }}</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Target market -->
+  <div class="section">
+    <div class="section-label">대상 시장</div>
+    <div class="market-group">
+      {% for val, label in [("US Equities","🇺🇸 미국"), ("Korean Equities","🇰🇷 한국"), ("Global","🌐 글로벌")] %}
+        <div class="market-btn {% if prefs.target_market == val %}active{% endif %}"
+             data-value="{{ val }}" onclick="selectMarket(this)">{{ label }}</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Interval -->
+  <div class="section">
+    <div class="section-label">발송 주기</div>
+    <div class="time-chips" id="timeChips">
+      {% for mins, label in [(10,"10분"), (20,"20분"), (30,"30분"), (60,"1시간")] %}
+        <div class="time-chip {% if prefs.interval_minutes == mins %}active{% endif %}"
+             data-value="{{ mins }}" onclick="selectTime(this)">{{ label }}</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Urgent alerts -->
+  <div class="section">
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-label">긴급 알림</div>
+        <div class="toggle-sub">장중 중요 이벤트 발생 시 즉시 전송</div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="urgentToggle"
+               {% if prefs.urgent_alerts %}checked{% endif %}
+               onchange="autoSave()">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+</div>
+
+<!-- Fixed send button -->
+<div class="send-bar">
+  <div class="send-bar-inner">
+    <button class="send-btn" id="sendBtn" onclick="sendNow()">지금 발송</button>
+  </div>
+</div>
+
+<script>
+  // --- Auto-save ---
+  let saveTimer = null;
+
+  function autoSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(commitSave, 400);
+  }
+
+  function commitSave() {
+    const payload = {
+      watchlist: getActive("watchlistChips"),
+      sectors: getActive("sectorChips"),
+      target_market: document.querySelector(".market-btn.active")?.dataset.value ?? "US Equities",
+      interval_minutes: parseInt(document.querySelector(".time-chip.active")?.dataset.value ?? "10"),
+      urgent_alerts: document.getElementById("urgentToggle").checked,
+    };
+    fetch("/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }).then(() => flashSaved());
+  }
+
+  function flashSaved() {
+    const el = document.getElementById("savedIndicator");
+    el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 1500);
+  }
+
+  function getActive(containerId) {
+    return [...document.querySelectorAll(`#${containerId} .chip.active`)]
+      .map(c => c.dataset.value);
+  }
+
+  // --- Chip toggles ---
+  document.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      chip.classList.toggle("active");
+      autoSave();
+    });
+  });
+
+  // --- Market select ---
+  function selectMarket(el) {
+    document.querySelectorAll(".market-btn").forEach(b => b.classList.remove("active"));
+    el.classList.add("active");
+    autoSave();
+  }
+
+  // --- Time select ---
+  function selectTime(el) {
+    document.querySelectorAll(".time-chip").forEach(t => t.classList.remove("active"));
+    el.classList.add("active");
+    autoSave();
+  }
+
+  // --- Custom ticker ---
+  function addCustomTicker() {
+    const input = document.getElementById("customTicker");
+    const val = input.value.trim().toUpperCase();
+    if (!val) return;
+    const existing = document.querySelector(`#watchlistChips [data-value="${val}"]`);
+    if (existing) {
+      existing.classList.add("active");
+    } else {
+      const chip = document.createElement("div");
+      chip.className = "chip active";
+      chip.dataset.group = "watchlist";
+      chip.dataset.value = val;
+      chip.textContent = val;
+      chip.addEventListener("click", () => { chip.classList.toggle("active"); autoSave(); });
+      document.getElementById("watchlistChips").appendChild(chip);
+    }
+    input.value = "";
+    autoSave();
+  }
+
+  document.getElementById("customTicker").addEventListener("keydown", e => {
+    if (e.key === "Enter") { e.preventDefault(); addCustomTicker(); }
+  });
+
+  // --- Send now ---
+  function sendNow() {
+    const btn = document.getElementById("sendBtn");
+    btn.disabled = true;
+    btn.classList.add("sending");
+    btn.textContent = "발송 중...";
+
+    // Show feedback immediately — pipeline runs in background
+    btn.textContent = "발송 요청됨 ✓";
+    fetch("/send", { method: "POST" }).catch(() => {});
+    setTimeout(() => {
+      btn.textContent = "지금 발송";
+      btn.disabled = false;
+      btn.classList.remove("sending");
+    }, 3000);
+  }
+</script>
+</body>
+</html>
