@@ -65,3 +65,22 @@ Your goal is a message that reads in under 20 seconds on mobile.
 ## Output
 Return plain text only.
 No markdown code block.
+
+## Self-Review
+Before returning the final Telegram message, review your own draft and improve it.
+
+Check:
+- Is the message too long?
+- Are there more than 3 high-priority items when only 3 are needed?
+- Is each item easy to scan in 2 to 3 short lines?
+- Is any wording repetitive or generic?
+- Is any item weak, stale, or low-signal?
+- Can any line be shortened without losing meaning?
+
+If the draft fails any check, revise it first.
+
+## Final Output Rule
+Return only the final revised Telegram message.
+Do not show the draft.
+Do not explain your review.
+Do not describe your reasoning.

@@ -22,6 +22,23 @@ from src.users import preferences as prefs
 app = Flask(__name__, template_folder="templates")
 
 
+# --- Bot polling (handles /start, /stop) ------------------------------------
+
+def start_bot():
+    def _run():
+        try:
+            from src.telegram.bot import polling_loop
+            polling_loop()
+        except Exception as e:
+            import traceback
+            print("[BOT ERROR]", e)
+            traceback.print_exc()
+
+    t = threading.Thread(target=_run, daemon=True, name="bot-polling")
+    t.start()
+    print("[BOT] thread started:", t.name)
+
+
 # --- Background scheduler ---------------------------------------------------
 
 def _scheduler_loop():
@@ -97,4 +114,5 @@ def send_now():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     start_scheduler()
+    start_bot()
     app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)
